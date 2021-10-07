@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Leaflet + Mapbox test</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css"
+      type="text/css"
+      crossorigin=""
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"
+      crossorigin=""
+    ></script>
+    <style>
+      #mapid {
+        width: 1024;
+        height: 1024px;
+        border: 1px solid #ccc;
+      }
+
+      .leaflet-container {
+        background: #fff;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function init() {
+        // create map and set center and zoom level
+        var map = new L.map("mapid");
+        map.setView([-35.235551, 149.08373], 16);
+
+        var mapboxTileUrl =
+          "https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+
+        L.tileLayer(mapboxTileUrl, {
+          attribution:
+            'Background map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        }).addTo(map);
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1 id="title">Favorite restaurants</h1>
+    <div id="mapid"></div>
+  </body>
+</html>
