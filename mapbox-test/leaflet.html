@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Leaflet + Mapbox test</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <style>
+      #mapid {
+        width: 1024;
+        height: 1024px;
+        border: 1px solid #ccc;
+      }
+
+      .leaflet-container {
+        background: #fff;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function init() {
+        // create map and set center and zoom level
+        var map = new L.map("mapid");
+        map.setView([-35.235551, 149.08373], 16);
+
+        var mapboxTileUrl =
+          "https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+
+        L.tileLayer(mapboxTileUrl, {
+          attribution:
+            'Background map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        var planes = [
+          ["7C6B07", -40.99497, 174.50808],
+          ["7C6B38", -41.30269, 173.63696],
+          ["7C6CA1", -41.49413, 173.5421],
+          ["7C6CA2", -40.98585, 174.50659],
+          ["C81D9D", -40.93163, 173.81726],
+          ["C82009", -41.5183, 174.78081],
+          ["C82081", -41.42079, 173.5783],
+          ["C820AB", -42.08414, 173.96632],
+          ["C820B6", -41.51285, 173.53274],
+        ];
+
+        for (var i = 0; i < planes.length; i++) {
+          marker = new L.marker([planes[i][1], planes[i][2]])
+            .bindPopup(planes[i][0])
+            .addTo(map);
+        }
+
+        // var marker = L.marker([-35.235551, 149.08373]).addTo(map);
+        marker.bindPopup(
+          '<b>Second Skin</b><br>By Karla Dickens. <a href= "https://www.canberra.edu.au/on-campus/art-collection/the-art-collection/second-skin-by-karla-dickens"> Link Here</a>'
+        );
+
+        function onMapClick(e) {
+          popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(mymap);
+        }
+
+        mymap.on("click", onMapClick);
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1 id="title">Favorite restaurants</h1>
+    <div id="mapid"></div>
+  </body>
+</html>

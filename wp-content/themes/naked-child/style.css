@@ -3,3 +3,12 @@ Template: naked
 Text Domain: naked-child 
 
 */
+#mapid {
+  width: 1024;
+  height: 1024px;
+  border: 1px solid #ccc;
+}
+
+.leaflet-container {
+  background: #fff;
+}
