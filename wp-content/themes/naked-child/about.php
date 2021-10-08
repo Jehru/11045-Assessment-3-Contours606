@@ -67,30 +67,8 @@ get_header(); // This fxn gets the header.php file and renders it
 						$locations[] = array($title, $lat, $long);
 					}
 
-					// echo $locations[0] . '<br>' . $locations[1] . '<br>' . $locations[2] . '<br>';
-
-					foreach ($locations as $values) {
-						// Prints out the title values
-						// echo $values[0];
-
-						// Prints out the latitude values
-						// echo $values[1];
-
-						// Prints out the longitude values
-						// echo $values[2];
 					?>
 
-						<script>
-							// for (var i = 0; i < locations.length; i++) {
-							marker = new L.marker([<?php echo $values[1] ?>, <?php echo $values[2] ?>])
-								.bindPopup('<?php echo $values[0] ?>')
-								.addTo(map);
-							// }
-						</script>
-
-					<?php
-					}
-					?>
 
 					<div class="the-content">
 						<?php the_content();
@@ -127,5 +105,76 @@ get_header(); // This fxn gets the header.php file and renders it
 	<!-- #content .site-content -->
 </div>
 <!--#primary.content - area-->
-<?php get_footer(); // This fxn gets the footer.php file and renders it 
+<?php //get_footer(); // This fxn gets the footer.php file and renders it 
 ?>
+
+
+<!-- DELTE FOOTER IF NOT WORKING AND UNCOMMENT ABOVE -->
+
+<?php
+/*-----------------------------------------------------------------------------------*/
+/* This template will be called by all other template files to finish 
+	/* rendering the page and display the footer area/content
+	/*-----------------------------------------------------------------------------------*/
+?>
+
+</main><!-- / end page container, begun in the header -->
+
+
+<script>
+	// create map and set center and zoom level
+	var map = new L.map("mapid");
+	map.setView([-35.235551, 149.08373], 16);
+
+	var mapboxTileUrl =
+		"https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+
+	L.tileLayer(mapboxTileUrl, {
+		attribution: 'Background map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+	}).addTo(map);
+</script>
+
+<?php
+foreach ($locations as $values) {
+	// Prints out the title values
+	// echo $values[0];
+
+	// Prints out the latitude values
+	// echo $values[1];
+
+	// Prints out the longitude values
+	// echo $values[2];
+?>
+
+	<script>
+		// for (var i = 0; i < locations.length; i++) {
+		marker = new L.marker([<?php echo $values[1] ?>, <?php echo $values[2] ?>])
+			.bindPopup('<?php echo $values[0] ?>')
+			.addTo(map);
+		// }
+	</script>
+
+<?php
+}
+?>
+
+<footer class="site-footer">
+	<div class="site-info container">
+
+		<p>Birthed <a href="http://bckmn.com/naked-wordpress" rel="theme">Naked</a>
+			on <a href="http://wordpress.org" rel="generator">Wordpress</a>
+			by <a href="http://bckmn.com" rel="designer">Joshua Beckman</a>
+		</p>
+
+	</div><!-- .site-info -->
+</footer><!-- #colophon .site-footer -->
+
+<?php wp_footer();
+// This fxn allows plugins to insert themselves/scripts/css/files (right here) into the footer of your website. 
+// Removing this fxn call will disable all kinds of plugins. 
+// Move it if you like, but keep it around.
+?>
+
+</body>
+
+</html>

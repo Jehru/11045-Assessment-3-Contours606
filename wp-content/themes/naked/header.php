@@ -36,35 +36,14 @@
 	// Removing this fxn call will disable all kinds of plugins and Wordpress default insertions. 
 	// Move it if you like, but I would keep it around.
 	?>
-
-
-	<script>
-		function init() {
-			// create map and set center and zoom level
-			var map = new L.map("mapid");
-			map.setView([-35.235551, 149.08373], 16);
-
-			var mapboxTileUrl =
-				"https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
-
-			L.tileLayer(mapboxTileUrl, {
-				attribution: 'Background map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-			}).addTo(map);
-
-			var marker = L.marker([-35.235551, 149.08373]).addTo(map);
-			marker.bindPopup(
-				'<b>Second Skin</b><br>By Karla Dickens. <a href= "https://www.canberra.edu.au/on-campus/art-collection/the-art-collection/second-skin-by-karla-dickens"> Link Here</a>'
-			);
-		}
-	</script>
 </head>
 
-<body onload="init()" <?php body_class();
-						// This will display a class specific to whatever is being loaded by Wordpress
-						// i.e. on a home page, it will return [class="home"]
-						// on a single post, it will return [class="single postid-{ID}"]
-						// and the list goes on. Look it up if you want more.
-						?>>
+<body <?php body_class();
+		// This will display a class specific to whatever is being loaded by Wordpress
+		// i.e. on a home page, it will return [class="home"]
+		// on a single post, it will return [class="single postid-{ID}"]
+		// and the list goes on. Look it up if you want more.
+		?>>
 
 	<header id="masthead" class="site-header">
 		<div class="container center">
