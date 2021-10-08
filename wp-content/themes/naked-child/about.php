@@ -9,9 +9,6 @@ get_header(); // This fxn gets the header.php file and renders it
 <div id="primary" class="row-fluid">
 	<div id="content" role="main" class="span8 offset2">
 
-		<!-- Adding the custom Map ID -->
-		<div id="mapid"></div>
-
 		<?php if (have_posts()) :
 			// Do we have any posts/pages in the databse that match our query?
 		?>
@@ -25,65 +22,76 @@ get_header(); // This fxn gets the header.php file and renders it
 					<h1 class="title"><?php the_title(); // Display the title of the page 
 										?></h1>
 
-					<!-- ADDING IN ADVANCED CUSTOM FORMS -->
-					<!-- Print the latitude value to the page? -->
-					<?php //the_field('latitude');
-					?>
-
-					<?php  //$lat = get_field('latitude');
-					//echo $lat;
-					?>
-
 
 					<?php
-
 					$entries = get_post_meta(get_the_ID(), 'marker_group', true);
+
+					$locations = array();
+
 					foreach ((array)$entries as $key => $entry) {
 
 						$title = $content = $url = $lat = $long = '';
 
 						if (isset($entry['title']))
 							$title = esc_html($entry['title']);
+						if (!empty($title)) {
+							echo '<h3>' . $title . '</h3>';
+						}
 
 						if (isset($entry['description']))
 							$content = $entry['description'];
-
-						if (isset($entry['url']))
-							$url = esc_html($entry['url']);
-
-						if (isset($entry['lat']))
-							$lat = esc_html($entry['lat']);
-						if (isset($entry['long']))
-							$long = esc_html($entry['long']);
-
-
-						if (!empty($title)) {
-							echo '<h3> ' . $title . '</h3>';
-						}
-
 						if (!empty($content)) {
 							echo '<p>' . $content . '</p>';
 						}
 
+
+						if (isset($entry['url']))
+							$url = esc_html($entry['url']);
 						if (!empty($url)) {
 							echo '<a href="' . $url . '"> Link Here</a>';
 						}
 
+
+						if (isset($entry['lat']))
+							$lat = esc_html($entry['lat']);
 						if (!empty($lat)) {
 							echo '<p> Latitude' . $lat . '</p>';
 						}
 
+						if (isset($entry['long']))
+							$long = esc_html($entry['long']);
 						if (!empty($long)) {
 							echo '<p> Longitude' . $long . '</p>';
 						}
-					} //* end foreach;
 
+						$locations[] = array($title, $lat, $long);
+					}
+
+					// echo $locations[0] . '<br>' . $locations[1] . '<br>' . $locations[2] . '<br>';
+
+					foreach ($locations as $values) {
+						// Prints out the title values
+						// echo $values[0];
+
+						// Prints out the latitude values
+						// echo $values[1];
+
+						// Prints out the longitude values
+						// echo $values[2];
 					?>
 
+						<script>
+							// for (var i = 0; i < locations.length; i++) {
+							marker = new L.marker([<?php echo $values[1] ?>, <?php echo $values[2] ?>])
+								.bindPopup('<?php echo $values[0] ?>')
+								.addTo(map);
+							// }
+						</script>
 
-					<?php //$long = get_field('longitude');
-					//echo $long;
+					<?php
+					}
 					?>
+
 					<div class="the-content">
 						<?php the_content();
 						// This call the main content of the page, the stuff in the main text box while composing.
@@ -92,7 +100,13 @@ get_header(); // This fxn gets the header.php file and renders it
 
 						<?php wp_link_pages(); // This will display pagination links, if applicable to the page 
 						?>
-					</div><!-- the-content -->
+					</div>
+					<!-- the-content -->
+
+
+					<!--Adding the custom Map ID-->
+					<div id="mapid">
+					</div>
 
 				</article>
 
@@ -103,13 +117,15 @@ get_header(); // This fxn gets the header.php file and renders it
 		?>
 
 			<article class="post error">
-				<h1 class="404">Nothing posted yet</h1>
-			</article>
+				<h1 class="404"> Nothing posted yet < /h1>
+					</ article>
 
-		<?php endif; // OK, I think that takes care of both scenarios (having a page or not having a page to show) 
-		?>
+				<?php endif; // OK, I think that takes care of both scenarios (having a page or not having a page to show) 
+				?>
 
-	</div><!-- #content .site-content -->
-</div><!-- #primary .content-area -->
+	</div>
+	<!-- #content .site-content -->
+</div>
+<!--#primary.content - area-->
 <?php get_footer(); // This fxn gets the footer.php file and renders it 
 ?>

@@ -14,38 +14,35 @@ function wpb_hook_javascript()
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
     <script>
-        function init() {
-            // create map and set center and zoom level
-            var map = new L.map("mapid");
-            map.setView([-35.235551, 149.08373], 16);
+        // function init() {
+        //     // create map and set center and zoom level
+        //     var map = new L.map("mapid");
+        //     map.setView([-35.235551, 149.08373], 16);
 
-            var mapboxTileUrl =
-                "https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+        //     var mapboxTileUrl =
+        //         "https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
 
-            L.tileLayer(mapboxTileUrl, {
-                attribution: 'Background map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-            }).addTo(map);
-
-
+        //     L.tileLayer(mapboxTileUrl, {
+        //         attribution: 'Background map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        //     }).addTo(map);
 
 
-            // for (var i = 0; i < planes.length; i++) {
-            //     marker = new L.marker([planes[i][1], planes[i][2]])
-            //         .bindPopup(planes[i][0])
-            //         .addTo(map);
-            // }
 
-            <?php $lat = get_field('latitude', 74);
-            $long = get_field('longitude', 74);
-            $title = get_field('title', 74);
-            $artist = get_field('artist', 74);
-            $link = get_field('link', 74);
-            $map = get_field('test', 74);
-            ?>
 
-            var marker = L.marker([<?php echo $lat ?>, <?php echo $long ?>]).addTo(map);
-            marker.bindPopup('<b> <?php echo $title ?> </b><br><?php echo $artist ?> <a href="<?php echo $link ?>"> See Work </a>');
-        }
+        // for (var i = 0; i < planes.length; i++) {
+        //     marker = new L.marker([planes[i][1], planes[i][2]])
+        //         .bindPopup(planes[i][0])
+        //         .addTo(map);
+        // }
+
+        <?php
+        // $lat = get_field('latitude', 74);
+        // $long = get_field('longitude', 74);
+        // $title = get_field('title', 74);
+        // $artist = get_field('artist', 74);
+        // $link = get_field('link', 74);
+        // $map = get_field('test', 74);
+        ?>
     </script>
 <?php
 }
