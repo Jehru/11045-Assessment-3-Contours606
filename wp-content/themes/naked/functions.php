@@ -56,6 +56,30 @@ add_action( 'widgets_init', 'naked_register_sidebars' );
 /*-----------------------------------------------------------------------------------*/
 /* Enqueue Styles and Scripts
 /*-----------------------------------------------------------------------------------*/
+// add description function
+add_post_type_support( 'page', 'excerpt' );
+
+// add tag function
+function _tag_for_page() {
+    register_taxonomy_for_object_type( 'post_tag', 'page' );
+}
+add_action('init', '_tag_for_page');
+
+function _page_on_tag_page( $wp_query ) {
+    if ( $wp_query->get('tag') ) $wp_query->set('post_type', 'any');
+}
+add_action('pre_get_posts', '_page_on_tag_page');
+
+// add category
+function _cat_for_page() {
+    register_taxonomy_for_object_type( 'category', 'page' );
+}
+add_action('init', '_cat_for_page'); 
+
+function  _page_on_cat_page( $wp_query ) {
+    if ( $wp_query->get('cat') ) $wp_query->set('post_type', 'any');
+}
+add_action('pre_get_posts', '_page_on_cat_page'); 
 
 function naked_scripts()  { 
 
