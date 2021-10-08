@@ -133,7 +133,7 @@ In the map page add
 
 ```
 
-Remove the get_footer and add this to the footer instead
+Remove the get_footer from the map page and add this to the footer instead
 
 ```
 
@@ -205,3 +205,28 @@ foreach ($locations as $values) {
 
 </html>
 ```
+
+Now Add some values into the custom fields and see the markers added to the page
+
+Helpful Sources Used in Dev (may need to refer later)
+References used in development
+
+Maybe Useful openterrain mapping
+https://github.com/openterrain/openterrain/wiki/Terrain-Data
+
+Adding multiple map markers in leafletJS
+https://stackoverflow.com/questions/42968243/how-to-add-multiple-markers-in-leaflet-js
+
+Simple LeafletJs tutorial
+http://zevross.com/blog/2014/10/28/tips-for-creating-leafleft-js-maps/
+Need leaflet id in dom before calling it in script
+https://stackoverflow.com/questions/42647735/leaflet-map-container-not-found
+
+CMB2
+https://github.com/CMB2/CMB2/wiki/Field-Types#group
+https://www.damiencarbery.com/2017/11/demo-of-cmb2-repeater-fields/
+https://gist.github.com/carasmo/8c7aa4c6d94517fc4c7d
+
+Passing variables to JS from Php
+https://hackthestuff.com/article/how-to-pass-php-variables-to-javascript
+https://stackoverflow.com/questions/3045619/how-to-store-values-from-foreach-loop-into-an-array
