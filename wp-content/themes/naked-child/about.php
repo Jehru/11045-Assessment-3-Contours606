@@ -35,39 +35,49 @@ get_header(); // This fxn gets the header.php file and renders it
 						if (isset($entry['title']))
 							$title = esc_html($entry['title']);
 						if (!empty($title)) {
-							echo '<h3>' . $title . '</h3>';
+							// echo '<h3>' . $title . '</h3>';
 						}
 
 						if (isset($entry['description']))
 							$content = $entry['description'];
 						if (!empty($content)) {
-							echo '<p>' . $content . '</p>';
+							// echo '<p>' . $content . '</p>';
 						}
 
 
 						if (isset($entry['url']))
 							$url = esc_html($entry['url']);
 						if (!empty($url)) {
-							echo '<a href="' . $url . '"> Link Here</a>';
+							// echo '<a href="' . $url . '"> Link Here</a>';
 						}
 
 
 						if (isset($entry['lat']))
 							$lat = esc_html($entry['lat']);
 						if (!empty($lat)) {
-							echo '<p> Latitude' . $lat . '</p>';
+							// echo '<p> Latitude' . $lat . '</p>';
 						}
 
 						if (isset($entry['long']))
 							$long = esc_html($entry['long']);
 						if (!empty($long)) {
-							echo '<p> Longitude' . $long . '</p>';
+							// echo '<p> Longitude' . $long . '</p>';
 						}
 
-						$locations[] = array($title, $lat, $long);
+						if (isset($entry['image']))
+							$image = esc_html($entry['image']);
+						// $image = wp_get_attachment_image(get_post_meta(get_the_ID(), 'image', 1), 'medium');
+						if (!empty($image)) {
+							// echo '<p> Longitude' . $long . '</p>';
+						}
+
+						// $url = wp_get_attachment_image(get_post_meta(get_the_ID(), 'image', 1), 'medium');
+
+						$locations[] = array($title, $lat, $long, $content, $url, $image);
 					}
 
 					?>
+
 
 
 					<div class="the-content">
@@ -144,14 +154,19 @@ foreach ($locations as $values) {
 
 	// Prints out the longitude values
 	// echo $values[2];
+
+	// echo $values[3];
+
+	// echo $values[4];
+
+	echo $values[5];
 ?>
 
 	<script>
-		// for (var i = 0; i < locations.length; i++) {
+		var popupContent = "<img src='<?php echo $values[5] ?>' width='100px'><h3> <?php echo $values[0] ?> </h3><p> <?php echo $values[3] ?> </p><a href=' <?php echo $values[4] ?> '> See More </a>";
+
 		marker = new L.marker([<?php echo $values[1] ?>, <?php echo $values[2] ?>])
-			.bindPopup('<?php echo $values[0] ?>')
-			.addTo(map);
-		// }
+			.bindPopup(popupContent).addTo(map);
 	</script>
 
 <?php
