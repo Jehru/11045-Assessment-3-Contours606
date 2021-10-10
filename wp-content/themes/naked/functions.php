@@ -94,3 +94,6 @@ function naked_scripts()  {
   
 }
 add_action( 'wp_enqueue_scripts', 'naked_scripts' ); // Register this fxn and allow Wordpress to call it automatcally in the header
+
+//CMB2
+require_once('CMB2/init.php');
