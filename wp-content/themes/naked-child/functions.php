@@ -19,7 +19,7 @@ add_action('wp_head', 'wpb_hook_javascript');
 
 <?php
 
-// Testing Krappy CMB2
+// Testing CMB2
 add_action('cmb2_admin_init', 'cmb2_sample_metaboxes');
 /**
  * Define the metabox and field configurations.
@@ -49,10 +49,11 @@ function cmb2_sample_metaboxes()
         ),
     ));
     $cmb->add_group_field($marker_group_id, array(
-        'name' => 'Work of Art Title',
+        'name' => 'Work of Art Title *',
         'desc' => 'Enter the post title for the link text.',
         'id'   => 'title',
         'type' => 'text',
+        'required' => 'required',
     ));
     $cmb->add_group_field($marker_group_id, array(
         'name' => 'Url to page',
@@ -67,24 +68,26 @@ function cmb2_sample_metaboxes()
         'type' => 'textarea_small',
     ));
     $cmb->add_group_field($marker_group_id, array(
-        'name' => 'Latitude',
+        'name' => 'Latitude *',
         'id'   => 'lat',
         'type' => 'text',
+        'required' => 'required',
     ));
     $cmb->add_group_field($marker_group_id, array(
-        'name' => 'Longitude',
+        'name' => 'Longitude *',
         'id'   => 'long',
         'type' => 'text',
+        'required' => 'required',
     ));
 
     $cmb->add_group_field($marker_group_id, array(
-        'name'    => 'Test File',
-        'desc'    => 'Upload an image or enter an URL.',
+        'name'    => 'Upload an image',
+        'desc'    => 'Upload an image',
         'id'      => 'image',
         'type'    => 'file',
         // Optional:
         'options' => array(
-            'url' => true, // Hide the text input for the url
+            'url' => false, // Hide the text input for the url
         ),
         'text'    => array(
             'add_upload_file_text' => 'Add File' // Change upload button text. Default: "Add or Upload File"
@@ -100,5 +103,29 @@ function cmb2_sample_metaboxes()
             ),
         ),
         'preview_size' => 'medium', // Image size to use when previewing in the admin.
+    ));
+    $cmb->add_group_field($marker_group_id, array(
+        'name'    => 'Audio file',
+        'desc'    => 'Upload an audio file',
+        'id'      => 'audio',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Add File' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => 'application/pdf', // Make library only display PDFs.
+            // Or only allow gif, jpg, or png images
+            // 'type' => array(
+            //     'image/gif',
+            //     'image/jpeg',
+            //     'image/png',
+            // ),
+        ),
+        'preview_size' => 'large', // Image size to use when previewing in the admin.
     ));
 }
