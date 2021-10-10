@@ -9,7 +9,7 @@ get_header(); // This fxn gets the header.php file and renders it
 
 <?php
 
-$test = get_post_meta(get_post_ID(), 'marker_group', true);
+// $test = get_post_meta(get_post_ID(), 'marker_group', true);
 
 $entries = get_post_meta(74, 'marker_group', true);
 
