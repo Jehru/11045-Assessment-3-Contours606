@@ -20,7 +20,7 @@ get_header(); // This fxn gets the header.php file and renders it
 			?>
 			
 			<?php global $post; // required
-				$args = array('category_name' => 'Artworksfront'); // include post category Architects
+				$args = array('category_name' => 'Artworks'); // include post category Architects
 				$custom_posts = get_posts($args);
 				foreach($custom_posts as $post) : setup_postdata($post);  
 				?><h3><strong><a href='<?php the_permalink(); echo"'>"; the_title(); ?></a></strong></h3><?php
