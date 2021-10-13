@@ -126,14 +126,8 @@ get_header(); // This fxn gets the header.php file and renders it
 ?>
 
 
-<!-- DELTE FOOTER IF NOT WORKING AND UNCOMMENT ABOVE -->
-
-<?php
-/*-----------------------------------------------------------------------------------*/
-/* This template will be called by all other template files to finish 
-	/* rendering the page and display the footer area/content
-	/*-----------------------------------------------------------------------------------*/
-?>
+<!-- Footer directly called on the main page due to the custom JavaScript required to show the map -->
+<!-- 		and the map markers  -->
 
 </main><!-- / end page container, begun in the header -->
 
@@ -146,6 +140,8 @@ get_header(); // This fxn gets the header.php file and renders it
 	// Create map and set center and zoom level
 	var map = new L.map("mapid");
 	map.setView([-35.235551, 149.08373], 16);
+
+
 
 	// Show Day/Night map
 	// If its day time show the day map
