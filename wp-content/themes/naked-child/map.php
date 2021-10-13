@@ -12,29 +12,54 @@ get_header(); // This fxn gets the header.php file and renders it
 
         <?php
 
-        // Check if rows exists.
-        if (have_rows('uc_contours_works_of_art')) :
+        // Old code uses repeaters
+        // if (have_rows('uc_contours_works_of_art')) :
 
-            // Loop through rows.
-            while (have_rows('uc_contours_works_of_art')) : the_row();
+        //     // Loop through rows.
+        //     while (have_rows('uc_contours_works_of_art')) : the_row();
 
-                // Load sub field values.
-                $title = get_sub_field('title');
-                $image = get_sub_field('image');
-                $creator = get_sub_field('creator');
+        //         // Load sub field values.
+        //         $title = get_sub_field('title');
+        //         $image = get_sub_field('image');
+        //         $creator = get_sub_field('creator');
 
-                $lat = get_sub_field('latitude');
-                $long = get_sub_field('longitude');
+        //         $lat = get_sub_field('latitude');
+        //         $long = get_sub_field('longitude');
 
-                // echo $lat;
-                // echo $long;
+        //         // echo $lat;
+        //         // echo $long;
 
-                // Store values in array for later on 
-                //      These are stored for the map markers
-                $locations[] = array($lat, $long, $title, $image, $creator);
-            // End loop.
-            endwhile;
-        endif;
+        //         // Store values in array for later on 
+        //         //      These are stored for the map markers
+        //         $locations[] = array($lat, $long, $title, $image, $creator);
+        //     // End loop.
+        //     endwhile;
+        // endif;
+
+        // Doesn't use repeaters
+        //      Get the artworks category
+        $custom_posts = get_posts(array('category', 2)); // Inlcude category Artworks
+
+        $locations = array(); // Create locations for markers 
+
+        // Create for loop which gets the values
+        foreach ($custom_posts as $post) : setup_postdata($post);
+
+            // Get the values neccessary for map markers
+            $lat = get_field('artworks_lat');
+            $long = get_field('artworks_long');
+            // echo $long;
+            // echo $lat;
+            $title = get_field('artworks_title');
+            $image = get_field('artworks_image');
+            $creator = get_field('artworks_creator');
+
+            // Store them as array, used later on in the script 
+            $locations[] = array($lat, $long, $title, $image, $creator);
+
+        endforeach;
+
+        // }
         ?>
 
         <!-- Show the Map-->
@@ -74,12 +99,14 @@ get_header(); // This fxn gets the header.php file and renders it
 
     // Add the url to map and give attribution
     L.tileLayer(mapboxTileUrl, {
-        attribution: 'Background map data &copy; <a href="http://openstreetmap.org">Mapbox</a> contributors',
+        attribution: ' Background map data &copy; <a href="http://openstreetmap.org">Mapbox</a> contributors',
     }).addTo(map);
 </script>
 <?php
 
 foreach ($locations as $values) {
+    // echo $values[0];
+    // echo $values[1];
     // $values 0 = lat 
     // $values 1 = long
     // $values 2 = title 
@@ -94,6 +121,8 @@ foreach ($locations as $values) {
         // 
         var popupContent = "<div class='popup'><img src='<?php echo $values[3] ?>' class='popup-image'><div class='popup-text'> <h4><?php echo $values[2] ?> </h4><p> By <?php echo $values[4] ?> </p><a href=' <?php // echo $values[4] 
                                                                                                                                                                                                                 ?> '> See More </a></div></div>";
+
+        // var popupContent = "Hi there"
 
         marker = new L.marker([<?php echo $values[0] ?>, <?php echo $values[1] ?>])
             .bindPopup(popupContent, {
