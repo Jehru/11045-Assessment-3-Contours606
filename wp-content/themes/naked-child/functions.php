@@ -17,31 +17,29 @@ function wpb_hook_javascript()
 add_action('wp_head', 'wpb_hook_javascript');
 ?>
 
-<?php 
-
 // // Testing CMB2
 // add_action('cmb2_admin_init', 'cmb2_sample_metaboxes');
 // /**
-//  * Define the metabox and field configurations.
-//  */
+// * Define the metabox and field configurations.
+// */
 // function cmb2_sample_metaboxes()
 // {
 
-//     $cmb = new_cmb2_box(array(
-//         'id'            => 'repeater_demo',  // Belgrove Bouncing Castles
-//         'title'         => 'Contour Map Markers',
-//         'object_types'  => array('page',), // Post type
-//         'context'       => 'normal',
-//         'priority'      => 'high',
-//         'show_names'    => true, // Show field names on the left
-//     ));
+// $cmb = new_cmb2_box(array(
+// 'id' => 'repeater_demo', // Belgrove Bouncing Castles
+// 'title' => 'Contour Map Markers',
+// 'object_types' => array('page',), // Post type
+// 'context' => 'normal',
+// 'priority' => 'high',
+// 'show_names' => true, // Show field names on the left
+// ));
 
-//     $marker_group_id = $cmb->add_field(array(
-//         'id'          => 'marker_group',
-//         'type'        => 'group',
-//         'repeatable'  => true,
-//         'options'     => array(
-//             'group_title'   => 'Post {#}',
+// $marker_group_id = $cmb->add_field(array(
+// 'id' => 'marker_group',
+// 'type' => 'group',
+// 'repeatable' => true,
+// 'options' => array(
+// 'group_title' => 'Post {#}',
 //             'add_button'    => 'Add Another Post',
 //             'remove_button' => 'Remove Post',
 //             'closed'        => true,  // Repeater fields closed by default - neat & compact.
@@ -129,3 +127,38 @@ add_action('wp_head', 'wpb_hook_javascript');
 //         'preview_size' => 'large', // Image size to use when previewing in the admin.
 //     ));
 // }
+
+
+// EDIT CODE
+
+<?php
+function kv_create_edit_page()
+{
+
+    $page = get_pages();
+    $edit_page = array('slug' => 'edit-post',    'title' => 'Edit Posts from the front-end');
+
+    foreach ($pages as $page) {
+        $apage = $page->post_name;
+        switch ($apage) {
+            case 'edit':
+                $edit_found = '1';
+                break;
+            default:
+                $no_page;
+        }
+    }
+
+    if ($edit_found != '1') {
+        $page_id = wp_insert_post(array(
+            'post_title' => $edit_page['title'],
+            'post_type' => 'page',
+            'post_name' => $edit_page['slug'],
+            'post_status' => 'publish',
+            'post_excerpt' => 'User profile and author page details page ! '
+        ));
+        add_post_meta($page_id, '_wp_page_template', 'kv-edit.php');
+    }
+}
+add_action('admin_init', 'kv_create_edit_page');
+?>
