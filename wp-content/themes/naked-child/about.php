@@ -1,3 +1,5 @@
+<?php acf_form_head(); ?>
+
 <?php
 
 /**

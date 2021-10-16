@@ -12,7 +12,7 @@ get_header(); // This fxn gets the header.php file and renders it
 
         <?php
 
-        // Old code uses repeaters
+        // // Old code uses repeaters
         // if (have_rows('uc_contours_works_of_art')) :
 
         //     // Loop through rows.
@@ -37,7 +37,7 @@ get_header(); // This fxn gets the header.php file and renders it
         // endif;
 
         // Doesn't use repeaters
-        //      Get the artworks category
+        //      Gets the artworks category
         $custom_posts = get_posts(array('category', 2)); // Inlcude category Artworks
 
         $locations = array(); // Create locations for markers 
@@ -48,8 +48,6 @@ get_header(); // This fxn gets the header.php file and renders it
             // Get the values neccessary for map markers
             $lat = get_field('artworks_lat');
             $long = get_field('artworks_long');
-            // echo $long;
-            // echo $lat;
             $title = get_field('artworks_title');
             $image = get_field('artworks_image');
             $creator = get_field('artworks_creator');
