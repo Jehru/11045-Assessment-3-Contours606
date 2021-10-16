@@ -2,7 +2,7 @@
 
 
 /**
- * Template Name: Book Entry
+ * Template Name: Add-Location
  */
 
 
@@ -35,13 +35,13 @@ get_header();
                     } else {
                         acf_form(array(
                             'post_id' => 'new_post',
-                            'field_groups' => array(172), // 172 Used ID of the field groups here. 191, 194 for books
+                            'field_groups' => array(172), // ADD CUSTOM FIELDS ID HERE
                             'post_title' => true, // This will show the title filed
                             'post_content' => true, // This will show the content field
                             'form' => true,
                             'new_post' => array(
                                 // 'post_type' => 'books', // For Custom post types
-                                'label' => 'artworks',
+                                // 'label' => 'artworks',
                                 'post_status' => 'publish' // You may use other post statuses like draft, private etc.
                             ),
                             'return' => '%post_url%',
