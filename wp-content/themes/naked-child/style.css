@@ -1,5 +1,48 @@
-/* Theme Name: naked
+/* Theme Name: naked-child
 Template: naked
 Text Domain: naked-child 
-
 */
+
+/* Set the map size and border colour */
+#mapid {
+  width: 1024;
+  height: 1024px;
+  border: 1px solid #ccc;
+}
+
+.leaflet-container {
+  background: #fff;
+}
+
+/* Specify the sizing of the popup for manual formatting */
+.leaflet-popup-content {
+  width: 300px;
+  height: 180px;
+}
+
+/* Make exit button slightly bigger and with adjusted spacing */
+.leaflet-container a.leaflet-popup-close-button {
+  padding: 10px 10px 0 0 !important;
+  font: 30px/14px Tahoma, Verdana, sans-serif !important;
+}
+
+/* Style the image, make it smaller and make it a preview image */
+/*    Cover is the key to a consistent image size, this may result in cropping */
+.popup-image {
+  height: 180px;
+  width: 130px;
+  float: left;
+  object-fit: cover;
+  margin-right: 5%;
+}
+
+/* Better center the text element */
+.popup-text {
+  padding-top: 10%;
+}
+
+/* For the popups heading text make it weightier and display side by side with image*/
+.popup h4 {
+  display: inline;
+  font-weight: 700;
+}
