@@ -8,7 +8,9 @@ get_header(); // This fxn gets the header.php file and renders it
 ?>
 <!-- Show the default content -->
 <div id="primary" class="row-fluid">
-    <div id="content" role="main" class="span8 offset2">
+    <!-- <div id="content" role="main" class="span8 offset2"> -->
+    <div id="content" role="main">
+
 
         <?php
 
@@ -82,6 +84,10 @@ get_header(); // This fxn gets the header.php file and renders it
     var map = new L.map("mapid");
     map.setView([-35.235551, 149.08373], 16);
 
+    // https://github.com/Leaflet/Leaflet.fullscreen
+    // Adding FullScreen control 
+    map.addControl(new L.Control.Fullscreen());
+
     // Show Day/Night map
     // If its day time show the day map
     if (7 < date && date < 18) {
@@ -97,7 +103,7 @@ get_header(); // This fxn gets the header.php file and renders it
 
     // Add the url to map and give attribution
     L.tileLayer(mapboxTileUrl, {
-        attribution: ' Background map data &copy; <a href="http://openstreetmap.org">Mapbox</a> contributors',
+        attribution: ' Background map data &copy; <a href="https://www.mapbox.com/">Mapbox</a> contributors',
     }).addTo(map);
 </script>
 <?php

@@ -1,7 +1,9 @@
 <?php
 /*
-Template Name: edit
-*/ ?>
+Template Name: Edit
+*/
+?>
+
 <?php
 // Use ACF head, for front end forms
 // User must be logged in so that 

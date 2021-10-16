@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Template Name: Add-Location
  */
@@ -35,7 +34,7 @@ get_header();
                     } else {
                         acf_form(array(
                             'post_id' => 'new_post',
-                            'field_groups' => array(172), // ADD CUSTOM FIELDS ID HERE
+                            'field_groups' => array(280), // ADD CUSTOM FIELDS ID HERE, Local Site is 172. Live Site is 280
                             'post_title' => true, // This will show the title filed
                             'post_content' => true, // This will show the content field
                             'form' => true,
