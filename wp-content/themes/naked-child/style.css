@@ -3,6 +3,15 @@ Template: naked
 Text Domain: naked-child 
 */
 
+/* Remove add/edit pages that were being annoying in menu */
+.page-item-311 {
+  display: none;
+}
+
+.page-item-316 {
+  display: none;
+}
+
 /* Set the map size and border colour */
 #mapid {
   width: 1024;

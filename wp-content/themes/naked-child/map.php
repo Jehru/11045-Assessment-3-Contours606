@@ -36,7 +36,7 @@ get_header(); // This fxn gets the header.php file and renders it
         //         $locations[] = array($lat, $long, $title, $image, $creator);
         //     // End loop.
         //     endwhile;
-        // endif;
+        // endif; -35.235551 149.08373
 
         // Doesn't use repeaters
         //      Gets the artworks category
@@ -54,8 +54,15 @@ get_header(); // This fxn gets the header.php file and renders it
             $image = get_field('artworks_image');
             $creator = get_field('artworks_creator');
 
+            // Remove any white space after a title
+            $trimmed_title = rtrim($title);
+
+            // For the Url replace the space in a work with a '-' 
+            $url_title = str_replace(' ', '-', $trimmed_title);
+
+
             // Store them as array, used later on in the script 
-            $locations[] = array($lat, $long, $title, $image, $creator);
+            $locations[] = array($lat, $long, $title, $image, $creator, $url_title);
 
         endforeach;
 
@@ -93,12 +100,13 @@ get_header(); // This fxn gets the header.php file and renders it
     if (7 < date && date < 18) {
         console.log("Day Time")
         var mapboxTileUrl =
-            "https://api.mapbox.com/styles/v1/jehru/ckuerzmta08qb17loz85yatl4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+            "https://api.mapbox.com/styles/v1/foxtails/ckuoon09sl7ta17qiqx2jutib/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZm94dGFpbHMiLCJhIjoiY2t1ajVuNzB6MnVzNzJ4bm5naWkwbTR6cCJ9.fINbH3iNnWVT_8BWWhh3HQ";
+        // "https://api.mapbox.com/styles/v1/jehru/ckuerzmta08qb17loz85yatl4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
     } else {
         // Otherwise show the night map
         console.log("Night Time")
         var mapboxTileUrl =
-            "https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+            "https://api.mapbox.com/styles/v1/foxtails/ckuj7x1dbb2xp18mq9fls6q9n/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZm94dGFpbHMiLCJhIjoiY2t1ajVuNzB6MnVzNzJ4bm5naWkwbTR6cCJ9.fINbH3iNnWVT_8BWWhh3HQ";
     }
 
     // Add the url to map and give attribution
@@ -116,6 +124,8 @@ foreach ($locations as $values) {
     // $values 2 = title 
     // $values 3 = image
     // $values 4 = creator  
+    // $values 5 = url with no spaces  
+
 ?>
     <script>
         // Write the content to an item, this shows the items via the map markers 
@@ -123,8 +133,7 @@ foreach ($locations as $values) {
         // 
         // Still need to figure out where the pages are going to be for the url links
         // 
-        var popupContent = "<div class='popup'><img src='<?php echo $values[3] ?>' class='popup-image'><div class='popup-text'> <h4><?php echo $values[2] ?> </h4><p> By <?php echo $values[4] ?> </p><a href=' <?php // echo $values[4] 
-                                                                                                                                                                                                                ?> '> See More </a></div></div>";
+        var popupContent = "<div class='popup'><img src='<?php echo $values[3] ?>' class='popup-image'><div class='popup-text'> <h4><?php echo $values[2] ?> </h4><p> By <?php echo $values[4] ?> </p><a href=' <?php echo $values[5] ?> '> See More </a></div></div>";
 
         // var popupContent = "Hi there"
 
