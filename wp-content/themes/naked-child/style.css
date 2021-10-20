@@ -12,6 +12,15 @@ Text Domain: naked-child
   display: none;
 }
 
+/* Remove the date for the posts, default in wp*/
+.post-meta {
+  display: none;
+}
+
+.post-categories {
+  display: none;
+}
+
 /* Set the map size and border colour */
 #mapid {
   width: 1024;

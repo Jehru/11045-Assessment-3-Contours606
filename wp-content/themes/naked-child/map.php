@@ -14,30 +14,6 @@ get_header(); // This fxn gets the header.php file and renders it
 
         <?php
 
-        // // Old code uses repeaters
-        // if (have_rows('uc_contours_works_of_art')) :
-
-        //     // Loop through rows.
-        //     while (have_rows('uc_contours_works_of_art')) : the_row();
-
-        //         // Load sub field values.
-        //         $title = get_sub_field('title');
-        //         $image = get_sub_field('image');
-        //         $creator = get_sub_field('creator');
-
-        //         $lat = get_sub_field('latitude');
-        //         $long = get_sub_field('longitude');
-
-        //         // echo $lat;
-        //         // echo $long;
-
-        //         // Store values in array for later on 
-        //         //      These are stored for the map markers
-        //         $locations[] = array($lat, $long, $title, $image, $creator);
-        //     // End loop.
-        //     endwhile;
-        // endif; -35.235551 149.08373
-
         // Doesn't use repeaters
         //      Gets the artworks category
         $custom_posts = get_posts(array('category', 2)); // Inlcude category Artworks
@@ -48,11 +24,10 @@ get_header(); // This fxn gets the header.php file and renders it
         foreach ($custom_posts as $post) : setup_postdata($post);
 
             // Get the values neccessary for map markers
-            $lat = get_field('artworks_lat');
-            $long = get_field('artworks_long');
+            // $lat = get_field('artworks_lat');
+            // $long = get_field('artworks_long');
+
             $title = get_field('artworks_title');
-            $image = get_field('artworks_image');
-            $creator = get_field('artworks_creator');
 
             // Remove any white space after a title
             $trimmed_title = rtrim($title);
@@ -60,13 +35,28 @@ get_header(); // This fxn gets the header.php file and renders it
             // For the Url replace the space in a work with a '-' 
             $url_title = str_replace(' ', '-', $trimmed_title);
 
+            $creator = get_field('artworks_creator');
+
+            $image = get_field('artworks_image');
+            // If the image is empty, i.e. no value then use a placeholder
+            if ($image == '') {
+                $image = 'https://www.freeiconspng.com/uploads/no-image-icon-6.png';
+            } else {
+                $image = get_field('artworks_image');
+            }
+
+            $map_Loc = get_field('artworks_map');
+            // var_dump($test);
+            $mapLat = $map_Loc['lat'];
+            $mapLong = $map_Loc['lng'];
 
             // Store them as array, used later on in the script 
-            $locations[] = array($lat, $long, $title, $image, $creator, $url_title);
+            // $locations[] = array($lat, $long, $title, $image, $creator, $url_title);
+            $locations[] = array($mapLat, $mapLong, $title, $image, $creator, $url_title);
+
 
         endforeach;
 
-        // }
         ?>
 
         <!-- Show the Map-->
@@ -101,12 +91,19 @@ get_header(); // This fxn gets the header.php file and renders it
         console.log("Day Time")
         var mapboxTileUrl =
             "https://api.mapbox.com/styles/v1/foxtails/ckuoon09sl7ta17qiqx2jutib/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZm94dGFpbHMiLCJhIjoiY2t1ajVuNzB6MnVzNzJ4bm5naWkwbTR6cCJ9.fINbH3iNnWVT_8BWWhh3HQ";
-        // "https://api.mapbox.com/styles/v1/jehru/ckuerzmta08qb17loz85yatl4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
     } else {
         // Otherwise show the night map
         console.log("Night Time")
         var mapboxTileUrl =
             "https://api.mapbox.com/styles/v1/foxtails/ckuj7x1dbb2xp18mq9fls6q9n/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZm94dGFpbHMiLCJhIjoiY2t1ajVuNzB6MnVzNzJ4bm5naWkwbTR6cCJ9.fINbH3iNnWVT_8BWWhh3HQ";
+
+        // Create a full fledge night mode
+        $('.home').css('background', '#292929');
+        $('.home').css('color', '#ffffff');
+        $('.site-title a').css('color', '#ffffff')
+        $('.page_item a').css('color', '#ffffff')
+
+
     }
 
     // Add the url to map and give attribution
@@ -116,9 +113,8 @@ get_header(); // This fxn gets the header.php file and renders it
 </script>
 <?php
 
+// For each location, create a map marker 
 foreach ($locations as $values) {
-    // echo $values[0];
-    // echo $values[1];
     // $values 0 = lat 
     // $values 1 = long
     // $values 2 = title 
@@ -130,9 +126,7 @@ foreach ($locations as $values) {
     <script>
         // Write the content to an item, this shows the items via the map markers 
         // 		Values 1-5 are the items from the array created above
-        // 
-        // Still need to figure out where the pages are going to be for the url links
-        // 
+
         var popupContent = "<div class='popup'><img src='<?php echo $values[3] ?>' class='popup-image'><div class='popup-text'> <h4><?php echo $values[2] ?> </h4><p> By <?php echo $values[4] ?> </p><a href=' <?php echo $values[5] ?> '> See More </a></div></div>";
 
         // var popupContent = "Hi there"
@@ -150,21 +144,14 @@ foreach ($locations as $values) {
 
 <footer class="site-footer">
     <div class="site-info container">
-
-        <!-- <p>Birthed <a href="http://bckmn.com/naked-wordpress" rel="theme">Naked</a>
-            on <a href="http://wordpress.org" rel="generator">Wordpress</a>
-            by <a href="http://bckmn.com" rel="designer">Joshua Beckman</a> -->
-        <!-- </p> -->
-
-        <p> By UC Students Edit this footer when footer content is decided</p>
-
+        <p>This website was produced by students in the Faculty of Arts & Design, University of Canberra, 2021.</p>
     </div><!-- .site-info -->
 </footer><!-- #colophon .site-footer -->
 
 <?php wp_footer();
 // This fxn allows plugins to insert themselves/scripts/css/files (right here) into the footer of your website. 
 // Removing this fxn call will disable all kinds of plugins. 
-// Move it if you like, but keep it around.
+// Move it if you like, but keep it around. -35.239991 149.08373
 ?>
 
 </body>

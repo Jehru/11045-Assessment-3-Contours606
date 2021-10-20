@@ -9,12 +9,7 @@
 
 <footer class="site-footer">
 	<div class="site-info container">
-
-		<p>Birthed <a href="http://bckmn.com/naked-wordpress" rel="theme">Naked</a>
-			on <a href="http://wordpress.org" rel="generator">Wordpress</a>
-			by <a href="http://bckmn.com" rel="designer">Joshua Beckman</a>
-		</p>
-
+		<p>This website was produced by students in the Faculty of Arts & Design, University of Canberra, 2021.</p>
 	</div><!-- .site-info -->
 </footer><!-- #colophon .site-footer -->
 
