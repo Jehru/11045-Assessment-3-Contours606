@@ -7,11 +7,11 @@
 get_header(); // This fxn gets the header.php file and renders it 
 ?>
 
-
+<link rel="stylesheet" href="style.css">
 <?php do_action( 'spacious_before_body_content' ); ?>
 
 	<div id="primary">
-		<div id="content" class="clearfix">
+		<div id="content">
 			<?php
 			while ( have_posts() ) : the_post();
 
@@ -29,11 +29,16 @@ get_header(); // This fxn gets the header.php file and renders it
 					if (!empty($images)):
 						//$images = implode(',',$images);
 						$images_arr = explode (",", strval($images));  
-						?><img style="float:left; margin-right:100px; height:200px;" src="<?php echo $images_arr[0]; ?>" /><?php
+						?>
+					 
+					<img style="float:left; margin-left:5px; margin-right:100px; height:200px;" src="<?php echo $images_arr[0]; ?>" />
+
+
+			<?php
 					endif;
 					?>
 
-					<p style="font-size: 16px; text-align: left;"><?php the_field( "artworks_information" ); ?></p>
+					<p style="font-size: 16px; margin-left:6px; text-align: left;"><?php the_field( "artworks_information" ); ?></p>
 					<?php
 					echo"</p><br>";
 					echo "</div><br><hr>";

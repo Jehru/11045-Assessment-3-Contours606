@@ -8,36 +8,14 @@ get_header(); // This fxn gets the header.php file and renders it
 ?>
 <!-- Show the default content -->
 <div id="primary" class="row-fluid">
-    <div id="content" role="main" class="span8 offset2">
+    <!-- <div id="content" role="main" class="span8 offset2"> -->
+    <div id="content" role="main">
+
 
         <?php
 
-        // Old code uses repeaters
-        // if (have_rows('uc_contours_works_of_art')) :
-
-        //     // Loop through rows.
-        //     while (have_rows('uc_contours_works_of_art')) : the_row();
-
-        //         // Load sub field values.
-        //         $title = get_sub_field('title');
-        //         $image = get_sub_field('image');
-        //         $creator = get_sub_field('creator');
-
-        //         $lat = get_sub_field('latitude');
-        //         $long = get_sub_field('longitude');
-
-        //         // echo $lat;
-        //         // echo $long;
-
-        //         // Store values in array for later on 
-        //         //      These are stored for the map markers
-        //         $locations[] = array($lat, $long, $title, $image, $creator);
-        //     // End loop.
-        //     endwhile;
-        // endif;
-
         // Doesn't use repeaters
-        //      Get the artworks category
+        //      Gets the artworks category
         $custom_posts = get_posts(array('category', 2)); // Inlcude category Artworks
 
         $locations = array(); // Create locations for markers 
@@ -48,14 +26,27 @@ get_header(); // This fxn gets the header.php file and renders it
             // Get the values neccessary for map markers
             $lat = get_field('artworks_lat');
             $long = get_field('artworks_long');
-            // echo $long;
-            // echo $lat;
             $title = get_field('artworks_title');
-            $image = get_field('artworks_image');
             $creator = get_field('artworks_creator');
 
+            $image = get_field('artworks_image');
+
+            // If the image is empty, i.e. no value then use a placeholder
+            if ($image == '') {
+                $image = 'https://www.freeiconspng.com/uploads/no-image-icon-6.png';
+            } else {
+                $image = get_field('artworks_image');
+            }
+
+            // Remove any white space after a title
+            $trimmed_title = rtrim($title);
+
+            // For the Url replace the space in a work with a '-' 
+            $url_title = str_replace(' ', '-', $trimmed_title);
+
+
             // Store them as array, used later on in the script 
-            $locations[] = array($lat, $long, $title, $image, $creator);
+            $locations[] = array($lat, $long, $title, $image, $creator, $url_title);
 
         endforeach;
 
@@ -84,43 +75,45 @@ get_header(); // This fxn gets the header.php file and renders it
     var map = new L.map("mapid");
     map.setView([-35.235551, 149.08373], 16);
 
+    // https://github.com/Leaflet/Leaflet.fullscreen
+    // Adding FullScreen control 
+    map.addControl(new L.Control.Fullscreen());
+
     // Show Day/Night map
     // If its day time show the day map
     if (7 < date && date < 18) {
         console.log("Day Time")
         var mapboxTileUrl =
-            "https://api.mapbox.com/styles/v1/jehru/ckuerzmta08qb17loz85yatl4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+            "https://api.mapbox.com/styles/v1/foxtails/ckuoon09sl7ta17qiqx2jutib/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZm94dGFpbHMiLCJhIjoiY2t1ajVuNzB6MnVzNzJ4bm5naWkwbTR6cCJ9.fINbH3iNnWVT_8BWWhh3HQ";
     } else {
         // Otherwise show the night map
         console.log("Night Time")
         var mapboxTileUrl =
-            "https://api.mapbox.com/styles/v1/jehru/ckufaj4xe04ls17lo8lpph3dq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamVocnUiLCJhIjoiY2t1ZXJ2aWphMDUxZzJucGhoeThweHFiOCJ9.nrR0xAhCQRjqdYf2ILx1wg";
+            "https://api.mapbox.com/styles/v1/foxtails/ckuj7x1dbb2xp18mq9fls6q9n/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZm94dGFpbHMiLCJhIjoiY2t1ajVuNzB6MnVzNzJ4bm5naWkwbTR6cCJ9.fINbH3iNnWVT_8BWWhh3HQ";
     }
 
     // Add the url to map and give attribution
     L.tileLayer(mapboxTileUrl, {
-        attribution: ' Background map data &copy; <a href="http://openstreetmap.org">Mapbox</a> contributors',
+        attribution: ' Background map data &copy; <a href="https://www.mapbox.com/">Mapbox</a> contributors',
     }).addTo(map);
 </script>
 <?php
 
+// For each location, create a map marker 
 foreach ($locations as $values) {
-    echo $values[0];
-    echo $values[1];
     // $values 0 = lat 
     // $values 1 = long
     // $values 2 = title 
     // $values 3 = image
     // $values 4 = creator  
+    // $values 5 = url with no spaces  
+
 ?>
     <script>
         // Write the content to an item, this shows the items via the map markers 
         // 		Values 1-5 are the items from the array created above
-        // 
-        // Still need to figure out where the pages are going to be for the url links
-        // 
-        var popupContent = "<div class='popup'><img src='<?php echo $values[3] ?>' class='popup-image'><div class='popup-text'> <h4><?php echo $values[2] ?> </h4><p> By <?php echo $values[4] ?> </p><a href=' <?php // echo $values[4] 
-                                                                                                                                                                                                                ?> '> See More </a></div></div>";
+
+        var popupContent = "<div class='popup'><img src='<?php echo $values[3] ?>' class='popup-image'><div class='popup-text'> <h4><?php echo $values[2] ?> </h4><p> By <?php echo $values[4] ?> </p><a href=' <?php echo $values[5] ?> '> See More </a></div></div>";
 
         // var popupContent = "Hi there"
 
@@ -137,21 +130,14 @@ foreach ($locations as $values) {
 
 <footer class="site-footer">
     <div class="site-info container">
-
-        <!-- <p>Birthed <a href="http://bckmn.com/naked-wordpress" rel="theme">Naked</a>
-            on <a href="http://wordpress.org" rel="generator">Wordpress</a>
-            by <a href="http://bckmn.com" rel="designer">Joshua Beckman</a> -->
-        <!-- </p> -->
-
-        <p> By UC Students Edit this footer when footer content is decided</p>
-
+        <p>This website was produced by students in the Faculty of Arts & Design, University of Canberra, 2021.</p>
     </div><!-- .site-info -->
 </footer><!-- #colophon .site-footer -->
 
 <?php wp_footer();
 // This fxn allows plugins to insert themselves/scripts/css/files (right here) into the footer of your website. 
 // Removing this fxn call will disable all kinds of plugins. 
-// Move it if you like, but keep it around.
+// Move it if you like, but keep it around. -35.239991 149.08373
 ?>
 
 </body>
