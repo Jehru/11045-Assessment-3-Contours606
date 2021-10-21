@@ -17,40 +17,18 @@ function wpb_hook_javascript()
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
 
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <?php
 }
 add_action('wp_head', 'wpb_hook_javascript');
 ?>
 
 <?php
-// function kv_create_edit_page()
-// {
-
-//     $page = get_pages();
-//     $edit_page = array('slug' => 'edit-post',    'title' => 'Edit Posts from the front-end');
-
-//     foreach ($pages as $page) {
-//         $apage = $page->post_name;
-//         switch ($apage) {
-//             case 'edit':
-//                 $edit_found = '1';
-//                 break;
-//             default:
-//                 $no_page;
-//         }
-//     }
-
-//     if ($edit_found != '1') {
-//         $page_id = wp_insert_post(array(
-//             'post_title' => $edit_page['title'],
-//             'post_type' => 'page',
-//             'post_name' => $edit_page['slug'],
-//             'post_status' => 'publish',
-//             'post_excerpt' => 'User profile and author page details page ! '
-//         ));
-//         add_post_meta($page_id, '_wp_page_template', 'kv-edit.php');
-//     }
-// }
-// add_action('admin_init', 'kv_create_edit_page');
-// 
+// Method 2: Setting.
+function my_acf_init()
+{
+    acf_update_setting('google_api_key', 'AIzaSyAaq7Q7h9WLK4qiu6SZnatwNQiVByUh5-Q');
+}
+add_action('acf/init', 'my_acf_init');
 ?>
