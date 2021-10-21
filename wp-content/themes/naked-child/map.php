@@ -94,7 +94,7 @@ get_header(); // This fxn gets the header.php file and renders it
 
     // Create map and set center and zoom level
     var map = new L.map("mapid");
-    map.setView([-35.235551, 149.08373], 16);
+    map.setView([-35.236551, 149.08373], 16);
 
     // https://github.com/Leaflet/Leaflet.fullscreen
     // Adding FullScreen control 
