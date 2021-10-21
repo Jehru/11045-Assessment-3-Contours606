@@ -46,13 +46,28 @@ get_header(); // This fxn gets the header.php file and renders it
             }
 
             // Get the map field and the lat and long from the markers added
-            $map_Loc = get_field('artworks_map');
-            $mapLat = strval($map_Loc['lat']);
-            $mapLong =  strval($map_Loc['lng']);
+            //      Converts the lat and long to strings via strval
+            // $map_Loc = get_field('artworks_map');
+            // $mapLat = strval($map_Loc['lat']);
+            // $mapLong =  strval($map_Loc['lng']);
+
+
+            $gmaps_field = get_field('artworks_map');
+            $gmaps_lat = strval($gmaps_field['lat']);
+            $gmaps_lng = strval($gmaps_field['lng']);
+
+            $field_lat = get_field('artworks_lat');
+            $field_lng = get_field('artworks_long');
+
+            // If the map marker is not added use the lat and long field inputs
+            //      This is the only way to do it via the front end form
+            $lat = $gmaps_lat ? $gmaps_lat : $field_lat;
+            $lng = $gmaps_lng ? $gmaps_lng : $field_lng;
+
 
             // Store them as array, used later on in the script 
             // $locations[] = array($lat, $long, $title, $image, $creator, $url_title);
-            $locations[] = array($mapLat, $mapLong, $title, $image, $creator, $url_title);
+            $locations[] = array($lat, $lng, $title, $image, $creator, $url_title);
 
 
         endforeach;
