@@ -50,19 +50,13 @@ get_header(); // This fxn gets the header.php file and renders it
  					<p style="font-size: 16px; text-align: left;">Creator: <?php the_field( "artworks_creator" ); ?> </p>
 					<p style="font-size: 16px; text-align: left;">Year of Artwork Installation: <?php the_field( "artworks_year" ); ?> </p>
 					<p style="font-size: 16px; text-align: left;">Owner of Collection: <?php the_field( "artworks_owner" ); ?> </p>
+					 					<audio controls class="audio-player">
+                            <source src="<?php the_field('artworks_audio'); ?>" type="audio/mpeg">
+
+					</audio> 
 					<?php
-					echo'<div style="min-height:220px;"><p>';
-					$images = get_field('artworks_image');
-					if (!empty($images)):
-						//$images = implode(',',$images);
-						$images_arr = explode (",", strval($images));  
-						?><img style="float:left; margin-right:80px; height:200px;" src="<?php echo $images_arr[0]; ?>" /><?php
-					endif;
-					?>
-					<p style="font-size: 16px; text-align: left;"><?php the_field( "artworks_information" ); ?> </p>
-					<?php
-					echo"</p><br>";
-					echo "</div><br>"?>
+					echo"<br><br>";
+					echo "<hr><br>"?>
 						<?php the_content();
 						// This call the main content of the post, the stuff in the main text box while composing.
 						// This will wrap everything in p tags
