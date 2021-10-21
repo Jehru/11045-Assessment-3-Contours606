@@ -45,10 +45,10 @@ get_header(); // This fxn gets the header.php file and renders it
                 $image = get_field('artworks_image');
             }
 
+            // Get the map field and the lat and long from the markers added
             $map_Loc = get_field('artworks_map');
-            // var_dump($test);
-            $mapLat = $map_Loc['lat'];
-            $mapLong = $map_Loc['lng'];
+            $mapLat = strval($map_Loc['lat']);
+            $mapLong =  strval($map_Loc['lng']);
 
             // Store them as array, used later on in the script 
             // $locations[] = array($lat, $long, $title, $image, $creator, $url_title);
@@ -121,6 +121,7 @@ foreach ($locations as $values) {
     // $values 3 = image
     // $values 4 = creator  
     // $values 5 = url with no spaces  
+
 
 ?>
     <script>
