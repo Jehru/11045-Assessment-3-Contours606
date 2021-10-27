@@ -7,6 +7,7 @@ wp-content/*
 !wp-content/mu-plugins/
 !wp-content/plugins/
 !wp-content/themes/
+!db-backup/
 
 # ignore these plugins
 wp-content/plugins/hello.php
@@ -19,5 +20,5 @@ node_modules/
 
 # ignore log files and databases
 *.log
-*.sql
+# *.sql
 *.sqlite
