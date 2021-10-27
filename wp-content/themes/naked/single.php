@@ -39,24 +39,25 @@ get_header(); // This fxn gets the header.php file and renders it
 					get_currentuserinfo();
 					$kv_author = get_the_author_meta('ID');
 					if ($current_user->ID == $kv_author) {
-						echo '<a href="' . site_url('edit') . '?post-id=' . get_the_ID() . '"> Edit</a>';
+						echo '<p style="font-size: 20px; text-align: right;"><a href="' . site_url('edit') . '?post-id=' . get_the_ID() . '"> Edit</a></p>';
 					}
 					?>
 
 
 
 					<div class="the-content">
+						<h3 style="color:#5F5F5F;"><strong>Artwork's Information</strong></h3>
 					<br>
- 					<p style="font-size: 16px; text-align: left;">Creator: <?php the_field( "artworks_creator" ); ?> </p>
-					<p style="font-size: 16px; text-align: left;">Year of Artwork Installation: <?php the_field( "artworks_year" ); ?> </p>
-					<p style="font-size: 16px; text-align: left;">Owner of Collection: <?php the_field( "artworks_owner" ); ?> </p>
+ 					<h4><strong style="color:gray;">Creator: </strong><?php the_field( "artworks_creator" ); ?> </h4><br>
+					<h4><strong style="color:gray;">Year of Artwork Installation: </strong><?php the_field( "artworks_year" ); ?> </h4><br>
+					<h4><strong style="color:gray;">Owner of Collection: </strong><?php the_field( "artworks_owner" ); ?> </h4><br>
 					 					<audio controls class="audio-player">
                             <source src="<?php the_field('artworks_audio'); ?>" type="audio/mpeg">
 
 					</audio> 
 					<?php
 					echo"<br><br>";
-					echo "<hr><br>"?>
+					echo "<hr>"?>
 						<?php the_content();
 						// This call the main content of the post, the stuff in the main text box while composing.
 						// This will wrap everything in p tags
